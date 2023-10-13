@@ -11,13 +11,15 @@
             <h6 class="card-text">Categoría: {{this.category}}</h6>
             <h6 class="card-text">Stock: {{this.stock}}</h6>
             <h6 class="card-text">Código: {{this.code}}</h6>
-            <button onclick="addToCart('{{this._id}}')" class="btn btn-success m-auto">Agregar Al carrito</button>
+            <button id="agregar" onclick="addToCart(`{{this._id}}`)" class="btn btn-success m-auto">Agregar Al carrito</button>
         </div>
     </div>
     {{/each}}
 </div>
 <br>
 <div class="text-center">
+    <button class="btn btn-warning m-auto">Ver Carrito</button>
+    <br><br>
     {{#if prevLink}}
         {{#if nextLink}}
             <a href="{{prevLink}}" class="btn btn-danger">Página Anterior</a>
@@ -31,5 +33,5 @@
 </div>
 
 
-
 <script src="/js/home.js"></script>
+

@@ -42,6 +42,17 @@ export class CartsManagerMongo{
         }
     };
 
+    // Eliminar Carrito
+    async deleteCart(cartId){
+        try {
+            const result = await this.model.findByIdAndDelete(cartId);
+            return result;
+        } catch (error) {
+            console.log(error.message);
+            throw new Error("No se pudo eliminar el carrito");
+        }
+    };
+
     // Agregar Producto al Carrito
     async addProductInCart(cartId, productId){
         try {

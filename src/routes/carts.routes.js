@@ -61,6 +61,17 @@ cartsRouter.delete("/:cid/product/:pid", async(req,res)=>{
     }
 });
 
+// Eliminar un Carrito
+cartsRouter.delete("/:cid", async(req,res)=>{
+    try {
+        const {cid: cartId} = req.params;
+        const result = await cartsService.deleteCart(cartId);
+        res.json({status:"success", result});
+    } catch (error) {
+        res.json({error:error.message});
+    }
+});
+
 // Actualizar Cantidad de Productos en el Carrito
 cartsRouter.put("/:cid/product/:pid", async(req,res)=>{
     try {

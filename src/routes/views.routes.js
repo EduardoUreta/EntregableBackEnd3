@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { productsService } from "../mongo/index.js";
+import { productsService, cartsService } from "../mongo/index.js";
 
 export const viewsRouter = Router();
 
 viewsRouter.get("/", async (req, res) => {
-    const {limit = 3, page = 1, sort = ""} = req.query;
+    const {limit = 10, page = 1, sort = ""} = req.query;
     const query = {
-        // stock: "10"
+        // stock: "12"
     };
     const options = {
         limit,
@@ -43,7 +43,14 @@ viewsRouter.get("/", async (req, res) => {
             : baseUrl.concat(`?page=${result.nextPage}`) 
             : null
     }
-    console.log(dataProducts);//{status:"sucess", payload:[]}
+    console.log(dataProducts);
+
     res.render("home", dataProducts);
+});
+
+viewsRouter.get("/cart", async (req, res) => {
+    const cartId = "6525bac4a00321ba34ae4c87";
+    const cart = await cartsService.getCartById(cartId);
+    res.render("cart", { products: cart.products})
 });
 
