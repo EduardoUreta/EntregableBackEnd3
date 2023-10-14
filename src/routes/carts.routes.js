@@ -35,7 +35,7 @@ cartsRouter.post("/",async(req,res)=>{
     }
 });
 
-// Actualizar producto en carrito
+// Agregar producto en carrito
 cartsRouter.post("/:cid/product/:pid", async(req,res)=>{
     try {
         const {cid:cartId, pid:productId} = req.params;

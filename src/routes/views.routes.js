@@ -50,7 +50,8 @@ viewsRouter.get("/", async (req, res) => {
 
 viewsRouter.get("/cart", async (req, res) => {
     const cartId = "6525bac4a00321ba34ae4c87";
-    const cart = await cartsService.getCartById(cartId);
-    res.render("cart", { products: cart.products})
+    const cart = await cartsService.getCartById(cartId,{lean:true});
+    const productsCart = cart.products;
+    res.render("cart", { products: productsCart})
 });
 

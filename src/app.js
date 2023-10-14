@@ -35,7 +35,14 @@ const io = new Server(httpServer);
 connectDB();
 
 // Configuración de HandleBars
-app.engine('.hbs', engine({extname: '.hbs'}));
+app.engine('.hbs', engine({
+        extname: '.hbs',
+        // Para que HandleBars tome información del 3eros
+        runtimeOptions: {
+            allowProtoMethodsByDefault: true,
+            allowProtoPropertiesByDefault: true
+        }
+}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname,"/views"));
 
