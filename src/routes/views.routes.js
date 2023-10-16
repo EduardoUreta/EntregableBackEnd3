@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { productsService, cartsService } from "../mongo/index.js";
+import { cartsModel } from "../mongo/models/carts.models.js";
 
 export const viewsRouter = Router();
 
@@ -49,7 +50,7 @@ viewsRouter.get("/", async (req, res) => {
 });
 
 viewsRouter.get("/cart", async (req, res) => {
-    const cartId = "6525bac4a00321ba34ae4c87";
+    const cartId = await cartsModel.findOne().sort({ createdAt: -1 });
     const cart = await cartsService.getCartById(cartId,{lean:true});
     const productsCart = cart.products;
     res.render("cart", { products: productsCart})
