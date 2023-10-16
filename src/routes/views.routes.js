@@ -50,7 +50,7 @@ viewsRouter.get("/", async (req, res) => {
 });
 
 viewsRouter.get("/cart", async (req, res) => {
-    const cartId = await cartsModel.findOne().sort({ createdAt: -1 });
+    const cartId = await cartsModel.findOne().sort({ carts: -1 });
     const cart = await cartsService.getCartById(cartId,{lean:true});
     const productsCart = cart.products;
     res.render("cart", { products: productsCart})
