@@ -1,5 +1,7 @@
 <h1 class="text-center text-bg-dark ">Productos</h1>
 
+<div id="messageContainer" class="text-center text-bg-dark text-warning  "></div>
+
 <div class="row">
     {{#each payload}}
     <div class="col-md-4 col-sm-6">
@@ -32,6 +34,17 @@
     {{/if}}
 </div>
 
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get("message");
 
-<script src="/js/home.js"></script>
+        if (message) {
+            const messageContainer = document.getElementById("messageContainer")
+            const messageElement = document.createElement("div");
+            messageElement.textContent = message;
+            messageElement.classList.add("welcome-message");
+            messageContainer.appendChild(messageElement);
+        }
+    </script>
+<script src="/js/products.js"></script>
 

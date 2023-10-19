@@ -46,7 +46,7 @@ viewsRouter.get("/", async (req, res) => {
     }
     console.log(dataProducts);
 
-    res.render("home", dataProducts);
+    res.render("products", dataProducts);
 });
 
 viewsRouter.get("/cart", async (req, res) => {
@@ -54,5 +54,20 @@ viewsRouter.get("/cart", async (req, res) => {
     const cart = await cartsService.getCartById(cartId,{lean:true});
     const productsCart = cart.products;
     res.render("cart", { products: productsCart})
+});
+
+viewsRouter.get("/signup", (req, res) => {
+    const userEmail = req.session.email;
+    userEmail ? res.render("profileView", {message: "Ya estás registrado", userEmail}) : res.render("signupView");
+});
+
+viewsRouter.get("/login", (req, res) => {
+    const userEmail = req.session.email;
+    userEmail ? res.render("profileView", {message: "Ya iniciaste sesión", userEmail}) : res.render("loginView");
+});
+
+viewsRouter.get("/profile", (req, res) => {
+    const userEmail = req.session.email;
+    userEmail ? res.render("profileView", {userEmail}) : res.redirect("/login");
 });
 

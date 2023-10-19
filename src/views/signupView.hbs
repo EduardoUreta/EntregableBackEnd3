@@ -1,0 +1,15 @@
+<h1>Pagina Registro</h1>
+
+<div style="color: red">
+    {{error}}
+</div>
+
+<form method="post" action="/api/sessions/signup">
+    <input type="text" name="first_name" placeholder="Ingresa tu nombre..."/>
+    <br>
+    <input type="email" name="email" placeholder="Ingresa tu email..."/>
+    <br>
+    <input type="password" name="password" placeholder="Ingresa tu password..."/>
+    <br>
+    <button> Registrarse </button>
+</form>
