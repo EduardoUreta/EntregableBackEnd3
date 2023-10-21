@@ -67,7 +67,11 @@ viewsRouter.get("/login", (req, res) => {
 });
 
 viewsRouter.get("/profile", (req, res) => {
-    const userEmail = req.session.email;
-    userEmail ? res.render("profileView", {userEmail}) : res.redirect("/login");
+    if(req.user?.first_name){
+        const first_name = req.user.first_name;
+        res.render("profileView", {first_name});
+    } else {
+        res.redirect("/login");
+    };
 });
 

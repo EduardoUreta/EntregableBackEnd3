@@ -1,5 +1,6 @@
 <h1 class="text-center text-bg-dark ">Productos</h1>
 
+{{!-- Mensaje de Bienvenida --}}
 <div id="messageContainer" class="text-center text-bg-dark text-warning  "></div>
 
 <div class="row">
@@ -34,6 +35,7 @@
     {{/if}}
 </div>
 
+    {{!-- Mensaje de Bienvenida --}}
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const message = urlParams.get("message");

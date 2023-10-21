@@ -15,6 +15,10 @@ import { cartsRouter } from "./routes/carts.routes.js";
 import { viewsRouter } from "./routes/views.routes.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
 
+import passport from "passport";
+import { config } from "./config/config.js";
+import { initializePassport } from "./config/passport.config.js";
+
 const port = 8080;
 const app = express();
 
@@ -57,12 +61,17 @@ app.set('views', path.join(__dirname,"/views"));
 app.use(session({
     store: MongoStore.create({
         ttl:3000,
-        mongoUrl:"mongodb+srv://eduardoureta:caca1234@probandomongoatlas.wfz8p7i.mongodb.net/mongoStore?retryWrites=true&w=majority"
+        mongoUrl: config.mongo.url
     }),
-    secret:"secretSession",
+    secret: config.server.secretSession,
     resave:true,
     saveUninitialized:true
 }));
+
+// Configurar Passport para utilizar la estrategia
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Rutas
 app.use(viewsRouter);
