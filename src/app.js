@@ -1,6 +1,6 @@
 import express from "express";
-import session from "express-session";
-import MongoStore from "connect-mongo";
+import session from "express-session"; //Gestionar sesiones de usuarios
+import MongoStore from "connect-mongo"; // Guardar las sesiones, actualizarlas y eliminarlas de la BD
 import cookieParser from "cookie-parser";
 
 import { __dirname } from "./utils.js"
@@ -57,7 +57,7 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname,"/views"));
 
-//configuración de session
+// Configuración de session
 app.use(session({
     store: MongoStore.create({
         ttl:3000,

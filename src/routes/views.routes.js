@@ -67,6 +67,7 @@ viewsRouter.get("/login", (req, res) => {
 });
 
 viewsRouter.get("/profile", (req, res) => {
+    // El req.user viene del deserializeUser
     if(req.user?.first_name){
         const first_name = req.user.first_name;
         res.render("profileView", {first_name});

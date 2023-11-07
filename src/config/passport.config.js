@@ -1,8 +1,9 @@
 import passport from "passport";
-// Este generará el Hash ahora 
-import localStrategy from "passport-local";
+import localStrategy from "passport-local"; 
+
+// Se creará el hash y la clave se guardará con HASH, más seguro
 import { createHash, inValidPassword } from "../utils.js";
-import { usersModel } from '../mongo/models/users.models.js';
+import { usersService } from "../mongo/index.js";
 
 import { config } from "./config.js";
 import GithubStrategy from "passport-github2"
@@ -11,23 +12,27 @@ export const initializePassport = () => {
     // Estrategia para registrar usuarios nuevos
     passport.use("signupLocalStrategy", new localStrategy(
         {  //Para trabajar con otros datos
-            passReqToCallback: true,
-            usernameField: "email", //El campo UserName = Email
+            passReqToCallback: true, //Acceso a objeto request
+            usernameField: "email", //El campo UserName ahora es Email
         },
         async (req, username, password, done) => {
-            const {first_name} = req.body;
+            const {first_name, last_name, age} = req.body;
             try {
-                const user = await usersModel.findOne({email: username});
+                // Buscar el email
+                const user = await usersService.getUserByEmail(username); 
                 if(user){
+                    // Usuario ya registrado
                     return done(null, false)
                 } else {
                     const newUser = {
                         first_name, 
+                        last_name,
+                        age,
                         email: username, 
                         password: createHash(password)
                     };
                     console.log(newUser);
-                    const userCreated = await usersModel.create(newUser);
+                    const userCreated = await usersService.createUser(newUser)
                             // El done (hubo errores?, nuevo user)
                     return done(null, userCreated)
                 }
@@ -44,7 +49,7 @@ export const initializePassport = () => {
         },
         async (username, password, done) => {
             try {
-                const user = await usersModel.findOne({email: username});
+                const user = await usersService.getUserByEmail(username)
                 if(!user){
                     // El usuario no está registrado
                     return done(null, false)
@@ -95,8 +100,10 @@ export const initializePassport = () => {
         done(null, user._id);
     });
 
+        //  El SV recibe a cookie, obtiene su valor, extrae la ID del usuario
+        // Busca la ID en la BD, y queda guardado en req.user
     passport.deserializeUser(async (id, done) => {
-        const user = await usersModel.findById(id);
+        const user = await usersService.getUserById(id);
         done(null, user); //req.user = info del usuario que traemos de BD
     });
 }

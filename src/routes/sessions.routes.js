@@ -12,7 +12,7 @@ sessionsRouter.post("/signup", passport.authenticate("signupLocalStrategy",{
 });
 
 sessionsRouter.get("/fail-signup",(req,res)=>{
-    res.render("signupView",{error:"No se pudo registrar el usuario"});
+    res.render("signupView", {error:"No se pudo registrar el usuario"});
 });
 
 // Ruta Solicitud Registro GitHub
